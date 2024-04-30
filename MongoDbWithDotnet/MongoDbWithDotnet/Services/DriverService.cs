@@ -66,10 +66,10 @@ namespace MongoDbWithDotnet.Services
         }
 
 
-        public async Task<bool> UpdateDriver(Driver driver)
+        public async Task<bool> UpdateDriver(string id,EditDriverDto driver)
         {
             // Use Filter Builders for clarity and type safety
-            var filter = Builders<Driver>.Filter.Eq(d => d.Id, driver.Id);
+            var filter = Builders<Driver>.Filter.Eq(d => d.Id, id);
 
             // Update document using UpdateDefinition Builders
             var update = Builders<Driver>.Update

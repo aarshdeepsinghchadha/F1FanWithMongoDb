@@ -51,12 +51,12 @@ namespace MongoDbWithDotnet.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDriver(string id, [FromBody] Driver driver)
+        public async Task<IActionResult> UpdateDriver(string id, [FromBody] EditDriverDto driver)
         {
-            if (id != driver.Id) return BadRequest();
+            if (string.IsNullOrWhiteSpace(id)) return BadRequest();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var updateResult = await _driverService.UpdateDriver(driver);
+            var updateResult = await _driverService.UpdateDriver(id, driver);
             if (updateResult)
             {
                 return Ok("Driver updated successfully.");
