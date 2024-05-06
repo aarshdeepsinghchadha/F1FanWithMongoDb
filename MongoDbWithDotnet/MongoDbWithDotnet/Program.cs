@@ -13,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<DriverService>();
+builder.Services.AddSingleton<DriverTeamService>();
 
 // add CORS
 

@@ -10,18 +10,22 @@ namespace MongoDbWithDotnet.Services
     public class DriverService
     {
         private readonly IMongoCollection<Driver> _driversCollection;
+        private readonly IMongoCollection<DriverTeam> _driverTeamCollection;
 
         public DriverService(IOptions<DatabaseSettings> databaseSettings)
         {
-            // intialize the mongo client
             var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
-
-            // connect to the MongoDb database
             var mongoDb = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
 
-            // connect to the mongo db collection
-            _driversCollection = mongoDb.GetCollection<Driver>(databaseSettings.Value.CollectionName);
+            _driversCollection = GetCollection<Driver>(mongoDb, databaseSettings.Value.CollectionName);
+            _driverTeamCollection = GetCollection<DriverTeam>(mongoDb, "DriverTeam");
         }
+
+        private IMongoCollection<T> GetCollection<T>(IMongoDatabase database, string collectionName)
+        {
+            return database.GetCollection<T>(collectionName);
+        }
+
 
         // Find provided a filter using lambda function _ => true to get me everything from the collection
         public async Task<List<Driver>> GetAsync() =>
@@ -54,7 +58,7 @@ namespace MongoDbWithDotnet.Services
                     Id = ObjectId.GenerateNewId().ToString(),
                     Name = driver.Name,
                     Number = driver.Number,
-                    Team = driver.Team
+                    TeamId = driver.TeamId
                 };
                 await _driversCollection.InsertOneAsync(newDriver);
                 return true;
@@ -75,7 +79,7 @@ namespace MongoDbWithDotnet.Services
             var update = Builders<Driver>.Update
                 .Set(d => d.Name, driver.Name) // Update Name
                 .Set(d => d.Number, driver.Number) // Update Number
-                .Set(d => d.Team, driver.Team);  // Update Team
+                .Set(d => d.TeamId, driver.TeamId);  // Update TeamId
 
             // UpdateOneAsync to update the first matching document
             var updateResult = await _driversCollection.UpdateOneAsync(filter, update);
@@ -97,11 +101,12 @@ namespace MongoDbWithDotnet.Services
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
 
-        public async Task<List<Driver>> FindDrivers(string? searchTerm)
+        public async Task<List<GetDriversListDto>> FindDrivers(string? searchTerm)
         {
             if (searchTerm == null)
             {
-                return await _driversCollection.Find(_ => true).ToListAsync();
+                var drivers = await _driversCollection.Find(_ => true).ToListAsync();
+                return await MapDriversToDto(drivers);
             }
 
             int driverNumber;
@@ -110,23 +115,42 @@ namespace MongoDbWithDotnet.Services
                 // Search by driver number
                 var filter = Builders<Driver>.Filter.Eq(d => d.Number, driverNumber);
                 var drivers = await _driversCollection.Find(filter).ToListAsync();
-                return drivers;
+                return await MapDriversToDto(drivers);
             }
             else
             {
                 // Search by name and team (assuming searchTerm is not a number)
+                var teamFilter = Builders<DriverTeam>.Filter.Regex(d => d.TeamName, new BsonRegularExpression($"/{searchTerm}/i"));
+                var teamIds = await _driverTeamCollection.Find(teamFilter).Project(d => d.Id).ToListAsync();
+
                 var filter = Builders<Driver>.Filter.Or(
-                  Builders<Driver>.Filter.Regex(d => d.Name, new BsonRegularExpression($"/{searchTerm}/i")),
-                  Builders<Driver>.Filter.Regex(d => d.Team, new BsonRegularExpression($"/{searchTerm}/i"))
+                    Builders<Driver>.Filter.Regex(d => d.Name, new BsonRegularExpression($"/{searchTerm}/i")),
+                    Builders<Driver>.Filter.In(d => d.TeamId, teamIds)
                 );
+
                 var drivers = await _driversCollection.Find(filter).ToListAsync();
-                return drivers;
+                return await MapDriversToDto(drivers);
             }
         }
 
+        private async Task<List<GetDriversListDto>> MapDriversToDto(List<Driver> drivers)
+        {
+            var result = new List<GetDriversListDto>();
 
+            foreach (var driver in drivers)
+            {
+                var team = await _driverTeamCollection.Find(dt => dt.Id == driver.TeamId).FirstOrDefaultAsync();
+                var teamName = team != null ? team.TeamName : "Unknown";
+                result.Add(new GetDriversListDto
+                {
+                    Id = driver.Id,
+                    Name = driver.Name,
+                    Number = driver.Number,
+                    Team = teamName
+                });
+            }
 
-
-
+            return result;
+        }
     }
 }
