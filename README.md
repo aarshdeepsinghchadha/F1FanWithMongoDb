@@ -1,34 +1,27 @@
-A project which has backend powered with .Net 8 Core Web api with Database MongoDb and FrontEnd as Angular 17
+# MongoDbWithAngular
 
-Dotnet Structure
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
 
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/04b9b8b9-be73-48ab-852d-f46ecf60da3d)
+## Development server
 
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/add4a014-fb54-4d7e-90db-dfa6206d564a)
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-Angular Structure
+## Code scaffolding
 
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/34c3df28-6d43-4f1b-bc62-0c242950e920)
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Build
 
-Driver Component 
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/2e7cbcc2-3c19-43c5-8f0d-441024dab2dc)
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/4edac1a4-9890-44f2-854a-196313f89972)
+## Running unit tests
 
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/260612d0-6329-46aa-a37a-d88c7eaaf6a9)
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Running end-to-end tests
 
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-Team Component
+## Further help
 
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/40a9820a-7226-4560-80e3-e286c0f5c2bf)
-
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/d387f33c-708a-479c-89c7-82043b6bdd54)
-
-![image](https://github.com/aarshdeepsinghchadha/F1FanWithMongoDb/assets/104445177/86742dbf-a947-457e-aa39-0bd3f5c84ba2)
-
-
-
-
-Thank you
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
