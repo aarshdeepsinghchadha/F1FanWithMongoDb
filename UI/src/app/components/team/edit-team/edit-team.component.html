@@ -1,0 +1,25 @@
+<div class="bg-image">
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+      <div class="center-container gradient-bg p-4 rounded" style="width: 60%;">
+        <form [formGroup]="editTeamForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-3">
+            <label for="teamName" class="col-sm-3 col-form-label" style="color: white;">Name</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="teamName" class="form-control" id="teamName">
+              <div *ngIf="editTeamForm.get('teamName').invalid && editTeamForm.get('teamName').touched" class="text-danger">
+                Name is required.
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button type="submit" class="btn btn-success">Update Team</button> |
+            <button type="button" class="btn btn-warning" (click)="onClear()">Clear</button> |
+            <button type="button" class="btn btn-info" (click)="onBack()">Back</button>
+          </div>
+        </form>
+        <div *ngIf="errorMessage" class="text-danger mt-3">{{ errorMessage }}</div>
+      </div>
+    </div>
+  </div>
+  

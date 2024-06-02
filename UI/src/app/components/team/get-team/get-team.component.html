@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <div class="row gradient-bg" style="height: 30vh;">
+      <div class="col-12 d-flex justify-content-center align-items-center" style="background-image: url('https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/manual/DriverAndTeamImages/2024/2105624600_16by9North'); background-size: cover;">
+        <h2 class="text-white bold" style="font-size: 5rem; font-weight: bold;"><span class="gradient-text">F1 </span>Team's</h2>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center mt-4">
+        <div class="input-group mb-3" style="max-width: 800px;">
+          <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchTerm">
+          <div class="input-group-append">
+            <button class="btn btn-outline-success ms-1 me-1" type="button" (click)="onClear()">
+              <i class="bi bi-x-circle-fill"></i> Clear
+            </button>
+            <button class="btn btn-success me-1" type="button" (click)="onSearch(searchTerm)">
+              <i class="bi bi-search-heart"></i> Search
+            </button>
+            <button class="btn gradient-bg" type="button" (click)="openAddTeamModal()" style="color: white;">
+              <i class="bi bi-cloud-plus-fill"></i> Add Team
+            </button>
+            <button class="btn driverButton-bg ms-1 me-1" type="button" (click)="openDriverList()" style="color: black;">
+              <i class="bi bi-car-front-fill"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <table class="table text-center table-borderless">
+          <thead class="thead-light">
+            <tr>
+              <th>Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let team of teams">
+              <td>{{team.teamName }}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary" (click)="onEdit(team.id)"><i class="bi bi-pencil-square"></i></button> |
+                <button class="btn btn-sm btn-outline-danger" (click)="onDelete(team.id)"><i class="bi bi-trash2-fill"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

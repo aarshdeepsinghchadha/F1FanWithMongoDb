@@ -1,0 +1,43 @@
+<div class="bg-image">
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="center-container gradient-bg p-4 rounded" style="width: 60%;">
+      <form [formGroup]="addDriverForm" (ngSubmit)="onSubmit()">
+        <div class="row mb-3">
+          <label for="name" class="col-sm-3 col-form-label" style="color: white;">Name</label>
+          <div class="col-sm-9">
+            <input type="text" formControlName="name" class="form-control" id="name">
+            <div *ngIf="addDriverForm.get('name').invalid && addDriverForm.get('name').touched" class="text-danger">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="number" class="col-sm-3 col-form-label" style="color: white;">Number</label>
+          <div class="col-sm-9">
+            <input type="number" formControlName="number" class="form-control" id="number">
+            <div *ngIf="addDriverForm.get('number').invalid && addDriverForm.get('number').touched" class="text-danger">
+              Number is required.
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="teamId" class="col-sm-3 col-form-label" style="color: white;">Team</label>
+          <div class="col-sm-9">
+            <select formControlName="teamId" class="form-select" id="teamId">
+              <option *ngFor="let team of teams" [value]="team.id">{{ team.teamName }}</option>
+            </select>
+            <div *ngIf="addDriverForm.get('teamId').invalid && addDriverForm.get('teamId').touched" class="text-danger">
+              Team is required.
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-success">Add Driver</button> |
+          <button type="button" class="btn btn-warning" (click)="onClear()">Clear</button> |
+          <button type="button" class="btn btn-info" (click)="onBack()">Back</button>
+        </div>
+      </form>
+      <div *ngIf="errorMessage" class="text-danger mt-3">{{ errorMessage }}</div>
+    </div>
+  </div>
+</div>

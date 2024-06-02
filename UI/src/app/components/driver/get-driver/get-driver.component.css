@@ -1,0 +1,23 @@
+.gradient-text {
+    background: linear-gradient(to right, #000000, #000000, #FF0000, #FF0000, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.gradient-bg {
+    background: linear-gradient(to right, #000000, #000000, #FF0000, #FF0000, #000000);
+}
+
+.teamButton-bg {
+    background: linear-gradient(to right, #00d2be, #00d2be, #c0c0c0, #c0c0c0, #00d2be);
+    border: none; 
+    color: white; 
+    padding: 10px 20px; 
+    border-radius: 4px; 
+}
+
+.btn-primary.teamButton-bg:hover {
+    background: linear-gradient(to right, #c0c0c0, #c0c0c0, #00d2be, #00d2be, #c0c0c0); 
+}

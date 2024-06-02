@@ -1,0 +1,14 @@
+.bg-image {
+    background-image: url('https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/manual/DriverAndTeamImages/2024/2105624600_16by9North');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #000000, #00ffea);
+  }
